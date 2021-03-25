@@ -1,7 +1,6 @@
 import socket
 from time import sleep
 
-
 sock = socket.socket()
 print("Начало соединения с сервером!")
 address = input("Введите адрес для подключения: ")
@@ -18,7 +17,7 @@ connection = True
 send = input()
 msg = send
 print("Началась отправка данных серверу!")
-sock.send("user1".encode())  # TODO: back to msg
+sock.send("user2".encode())  # TODO: back to msg
 
 
 while True:
