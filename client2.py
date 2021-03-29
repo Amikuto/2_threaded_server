@@ -1,5 +1,20 @@
 import socket
-from time import sleep
+import threading
+
+
+def print_messages():
+    print("ВЫ на этапе принта мессагей")
+    while True:
+        name = sock.recv(1024)
+        data = sock.recv(1024)
+        print(f"{name.decode()}:    {data.decode()}")
+
+
+def send_messages():
+    while True:
+        message = input("Введите сообщение: ")
+        sock.send(message.encode())
+
 
 sock = socket.socket()
 print("Начало соединения с сервером!")
@@ -14,26 +29,29 @@ sock.connect(('localhost', 9090))
 
 connection = True
 
-send = input()
-msg = send
-print("Началась отправка данных серверу!")
+nickname = input("Введите свой никнейм: ")
+# msg = nickname
+print("Началась отправка никнейма серверу!")
 sock.send("user2".encode())  # TODO: back to msg
 
 
+
+# thread_server1 = threading.Thread(target=send_messages())
+thread_server = threading.Thread(target=print_messages())
+thread_server.start()
 while True:
+    print(123)
 
-    # sock.close()
-    send = input()
-    msg = send
-    print("Началась отправка данных серверу!")
-    sock.send(msg.encode())
 
-    print("Прием данных от сервера!")
-    data = sock.recv(1024)
-    print(data)
-    print(data.decode())
+# while True:
+#     sock.close()
+#     send = input()
+#     msg = send
+#     sock.send(msg.encode())
+#
+#     print("Прием данных от сервера!")
+#     data = sock.recv(1024)
+#     print(data)
+#     print(data.decode())
 
-    # if data.decode() == "exit":
-    #     sock.close()
-    #     break
 
