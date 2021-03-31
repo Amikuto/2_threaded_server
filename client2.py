@@ -1,13 +1,24 @@
 import socket
-import threading
+
+
+def ReceiveData():
+    while True:
+        try:
+
+            name = sock.recvfrom(1024)
+            print(name)
+            data = sock.recvfrom(1024)
+            print(data)
+        except:
+            pass
 
 
 def print_messages():
-    print("ВЫ на этапе принта мессагей")
-    while True:
-        name = sock.recv(1024)
-        data = sock.recv(1024)
-        print(f"{name.decode()}:    {data.decode()}")
+    print("ds yf 'nfgt print messages")
+    name = sock.recv(1024)
+    print(name)
+    data = sock.recv(1024)
+    print(data)
 
 
 def send_messages():
@@ -16,42 +27,33 @@ def send_messages():
         sock.send(message.encode())
 
 
-sock = socket.socket()
-print("Начало соединения с сервером!")
-address = input("Введите адрес для подключения: ")
-if not address or address == '':
-    address = "localhost"
+if __name__ == "__main__":
+    sock = socket.socket()
 
-port = input("Введите номер порта: ")
-if not port or port == '':
-    port = 9090
-sock.connect(('localhost', 9090))
+    print("Начало соединения с сервером!")
+    address = input("Введите адрес для подключения: ")
+    if not address or address == '':
+        address = "localhost"
 
-connection = True
+    port = input("Введите номер порта: ")
+    if not port or port == '':
+        port = 9090
+    sock.connect(('localhost', 9090))
 
-nickname = input("Введите свой никнейм: ")
-# msg = nickname
-print("Началась отправка никнейма серверу!")
-sock.send("user2".encode())  # TODO: back to msg
+    # connection = True
 
-
-
-# thread_server1 = threading.Thread(target=send_messages())
-thread_server = threading.Thread(target=print_messages())
-thread_server.start()
-while True:
-    print(123)
-
-
-# while True:
-#     sock.close()
-#     send = input()
-#     msg = send
-#     sock.send(msg.encode())
-#
-#     print("Прием данных от сервера!")
-#     data = sock.recv(1024)
-#     print(data)
-#     print(data.decode())
-
-
+    while True:
+        nickname = input("Введите свой никнейм: ")
+        if len(nickname) != 0:
+            print("Началась отправка никнейма серверу!")
+            sock.send(nickname.encode())
+            break
+        else:
+            continue
+            # nickname = input("Введите свой никнейм: ")
+    while True:
+        send = input()
+        msg = send
+        sock.send(send.encode())
+        data = sock.recv(1024)
+        print(data.decode())

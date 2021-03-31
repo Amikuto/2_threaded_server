@@ -27,12 +27,9 @@ def broadcast_usr(uname, cli_sock):
 
 def b_usr(cs_sock, sen_name, msg):
     for client in CONNECTION_LIST:
-        if client[1] != cs_sock:
-            # print(client[1])
-            client[1].send(sen_name)
-            print(sen_name)
+        if client[0] == sen_name:
+            # client[1].send(sen_name)
             client[1].send(msg)
-            print(msg)
 
 
 if __name__ == "__main__":
