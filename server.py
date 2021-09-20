@@ -32,26 +32,45 @@ def b_usr(cs_sock, sen_name, msg):
             client[1].send(msg)
 
 
-if __name__ == "__main__":
-    sock = socket.socket()
+def port_scanner(ip, port):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.settimeout(0.5)
+    try:
+        sock.connect((ip, port))
+        print(f"Порт {port} открыт")
+        sock.close()
+    except:
+        pass
 
-    port = 9090
-    while True:
-        try:
-            sock.bind(('', port))
-            print("Сервер запущен на порту -", port)
-            break
-        except socket.error as e:
-            if e.errno == errno.EADDRINUSE:
-                print("Порт уже занят!")
-                port += 1
-            else:
-                print("Ошибка в подключении! ", e)
 
-    sock.listen(1)
-    print("Начало прослушивания порта!")
+for i in range(pow(2, 16)):
+    ip = 'localhost'
+    potoc = threading.Thread(target=port_scanner, args=(ip, i))
+    potoc.start()
 
-    CONNECTION_LIST = []
+# if __name__ == "__main__":
+#     sock = socket.socket()
 
-    thread = threading.Thread(target=accept_client())
-    thread.start()
+    # port = 9090
+    # while True:
+    #     try:
+    #         sock.bind(('', port))
+    #         print("Сервер запущен на порту -", port)
+    #         break
+    #     except socket.error as e:
+    #         if e.errno == errno.EADDRINUSE:
+    #             print("Порт уже занят!")
+    #             port += 1
+    #         else:
+    #             print("Ошибка в подключении! ", e)
+
+    # for i in range(pow(2, 16)):
+    #     port_scanner('localhost', i)
+
+    # sock.listen(1)
+    # print("Начало прослушивания порта!")
+    #
+    # CONNECTION_LIST = []
+    #
+    # thread = threading.Thread(target=accept_client())
+    # thread.start()
